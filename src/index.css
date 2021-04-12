@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.cross {
+position: fixed;
+  bottom: 50px;
+  right: 50px;
+}

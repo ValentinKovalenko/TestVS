@@ -1,25 +1,37 @@
-import logo from './logo.svg';
+import React, {useEffect, useState} from 'react'
 import './App.css';
+import {Main} from "./components/Main";
+import {BrowserRouter} from 'react-router-dom'
+import {useRoutes} from "./components/routes";
+import {connect} from "react-redux";
+import * as actions from './actions/actions'
+import ModalExampleContentImage from "./components/Modal";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function App({allUser, allCity}) {
+    const routes = useRoutes()
+    const [open, setOpen] = useState(true)
+
+    useEffect(() => {
+        actions.getUser()
+        actions.getCity()
+    }, [])
+
+    return (
+        <BrowserRouter>
+            <div>
+                <Main allCity={allCity} allUser={allUser}/>
+                {routes}
+                <ModalExampleContentImage show={open} />
+            </div>
+        </BrowserRouter>
+    );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    allCity: state.allCity,
+    allUser: state.allUser,
+});
+
+
+export default connect(mapStateToProps)(App);
+
